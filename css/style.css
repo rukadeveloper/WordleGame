@@ -53,6 +53,10 @@ main .wordle-con .wordle-block .wordle-area {
   justify-content: center;
 }
 
+main .wordle-con .wordle-block .wordle-area.anime {
+  animation: earthquake 0.4s ease-in 2;
+}
+
 main .wordle-con .wordle-block .wordle-area .wordle-each {
   width: 50px;
   height: 50px;
@@ -130,4 +134,25 @@ main .timer-wrap {
   background-color: #333;
   color: #fff;
   margin-top: 8px;
+}
+
+@keyframes earthquake {
+  0% {
+    transform: translateX(-5px);
+  }
+  20% {
+    transform: translateX(5px);
+  }
+  40% {
+    transform: translateX(0);
+  }
+  60% {
+    transform: translateX(-5px);
+  }
+  80% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }

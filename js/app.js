@@ -5,6 +5,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   let each = 0;
   let attempt = 0;
+  let keyboard = 0;
   const answer = "apple";
   let isModal = false;
   let timer;
@@ -74,6 +75,9 @@ window.addEventListener("DOMContentLoaded", () => {
       const eachInput = document.querySelector(
         `.wordle-area[data-attempt='${attempt}'] .wordle-each[data-each='${i}']`
       );
+      const eachArea = document.querySelector(
+        `.wordle-area[data-attempt='${attempt}']`
+      );
       const blocks = eachInput.innerText.toLowerCase();
       if (blocks === answer[i]) {
         eachInput.style.background = "#6aaa64";
@@ -94,6 +98,7 @@ window.addEventListener("DOMContentLoaded", () => {
       } else {
         eachInput.style.background = "#333";
         eachInput.style.color = "#fff";
+        eachArea.classList.add("anime");
       }
     }
     if (correct === 5) gameOver();
@@ -118,7 +123,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const eachTag = document.querySelector(
       `.wordle-area[data-attempt='${attempt}'] .wordle-each[data-each='${each}']`
     );
-    if (e.key === "Backspace") Backspaces(eachTag);
+    if (e.keyCode === 8) Backspaces(eachTag);
     else if (each === 5) {
       if (e.keyCode === 13) {
         checkAnswer();
@@ -132,12 +137,31 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  function keyboardClick() {}
+  const keyboardInput = () => {
+    keyboards.forEach((eeel, idxxx) => {
+      eeel.addEventListener("click", () => {
+        const keyContents = eeel.innerText;
+        let keyCode = keyContents.charCodeAt(0);
+        if (keyContents === "Enter") {
+          keyCode = 13;
+        } else if (keyContents === "Back") {
+          keyCode = 8;
+        }
+        const keyEvent = new KeyboardEvent("keydown", {
+          key: keyContents.toUpperCase(),
+          keyCode: keyCode,
+          which: keyCode,
+          bubbles: true,
+        });
+        console.log(keyContents);
+        keyInput(keyEvent);
+      });
+    });
+  };
 
   Timer();
 
   window.addEventListener("keydown", keyInput);
-  keyboards.forEach((eeel) => {
-    eeel.addEventListener("click", keyboardClick);
-  });
+
+  keyboardInput();
 });
